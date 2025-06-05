@@ -1,0 +1,87 @@
+LAB-2:
+CLI:
+
+Router>en
+
+Router#conf t
+
+Enter configuration commands, one per line. End with CNTL/Z.
+
+Router (config) #tacacs-server host 200.60.10.1
+
+Router(config)#tacacs-server key 5678
+
+Router(config)#aaa new-model
+
+Router (config)#tacacs-server key 1234
+
+Router (config)#aaa new-model
+
+Router(config)#aaa authentication login default group tacacs local
+
+Router(config)#line vty 0 3
+
+Router(config-line)#login authentication default
+
+Router(config-line)#exit
+
+Router (config)#
+
+cmd:
+telnet 192.168.20.5
+
+CLI:
+Router(config)#Hostname mac
+
+mac (config)#ip domain name cisco.com
+
+mac (config) #crypto key generate RSA
+
+
+How many bits in the modulus [512]: 1024
+
+mac (config) #username dash
+
+
+mac (config) #username dash password cisco
+
+mac (config) #aaa new-model
+
+mac (config) #aaa authentication login default, local
+
+mac (config)#tacacs-server host 200.60.20.1
+
+mac (config) #tacacs-server key 5678
+
+mac (config)#aaa authentication login default group tacacs local
+
+mac (config)#line vty 0 3
+
+mac (config-line)#login authentication default
+
+mac (config-line)#transport input SSH
+
+mac(config-line)#exit
+
+mac (config)#enable password 0987
+
+mac (config)#
+
+cmd:
+C:\>SSH-1 dinanath 192.168.20.5
+
+Password:
+
+% Login invalid
+
+Password:
+
+Aven
+
+Password:
+
+A#conf t
+
+Enter configuration commands, one per line. End with CNTL/Z.
+
+A(config)#
