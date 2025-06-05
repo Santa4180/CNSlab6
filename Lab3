@@ -1,0 +1,80 @@
+LAB-3:
+CLI:
+Router (config)#interface GigabitEthernet0/1
+
+Router (config-if)#no shutdown
+
+Router (config-if)#
+Router (config-if)#ip address 200.100.10.5 255.255.255.0
+
+Router (config-if)#
+
+Router (config-if)#
+
+Router (config-if)#exit
+
+Router (config)
+
+Router (config)#ip route 192.168.10.0 255.255.255.0 10.10.10.1
+
+Router (config)#
+
+Router (config)#access-list 3 deny host 192.168.10.2
+
+Router (config) #access-list 3 permit any
+
+Router (config)#int Gig0/1
+
+Router (config-if)#ip access-group, 3 out
+
+Router (config-if)#exit
+
+Router (config)#do sh access-list 3
+
+Standard IP access list 3
+
+deny host 192.168.10.2 permit any
+
+Router (config)#
+
+cmd:
+ping 200.100.10.1
+
+cmd:
+ftp 200.100.10.1
+
+
+CLI:
+Router#en
+
+Router#conf t
+
+Enter configuration commands, one per line. End with CNTL/Z.
+
+Router (config)#access-list 120 deny tep host 192.168.10.1
+
+host 200.100.10.1 eq www
+
+Router(config)#access-list 120 deny top host 192.168.10.3
+
+host 200.100.10.1 eq ftp
+
+Router (config)#access-list 120 permit ip any any
+
+Router(config)#int Gig0/1
+
+Router (config-if)#ip access-group 120 out
+
+Router (config-if)#do sh access-list 120
+
+Extended IP access list 120
+
+deny tcp host 192.168.10.1 host 200.100.10.1 eq www
+
+deny top host 192.168.10.3 host 200.100.10.1 eq ftp
+
+permit ip any any
+
+
+cmd:
+ftp 200.100.10.1
