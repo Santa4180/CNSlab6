@@ -1,0 +1,70 @@
+LAB-1:
+CLI:
+Router>en
+
+Router#config terminal
+
+Enter configuration commands, one per line. End with CNTL/Z.
+
+Router (config)#aaa new-model
+
+Router(config)#aaa authentication login default local
+
+Router (config)#username dinanath password cisco
+
+Router(config)#line vty 0 3
+
+Router (config-line)#login authentication default
+
+Router(config-line)#exit
+
+Router(config)#
+
+Prompt:
+telnet 192.168.10.5
+
+CLI:
+ip address 192.168.30.5 255.255.255.0
+
+Router (config-if)#ip address 192.168.30.5 255.255.255.0
+
+Router(config-if)#exit
+
+Router (config) #Hostname dinanath
+
+dinanath (config)#ip domain name cisco.com
+
+dinanath (config)#crypto key generate RSA
+How many bits in the modulus [512]: 1024
+dinanath (config) #username dash password cisco
+dinanath (config) #aaa new-model
+
+dinanath (config) #aaa authentication login default local
+
+dinanath (config)#line vty 0 3
+
+dinanath (config-line)#login authentication default
+
+dinanath (config-line)#transport input SSH
+
+dinanath (config-line)#exit
+
+dinanath (config) #enable password 1234
+
+dinanath (config)#
+
+Prompt:
+
+C:\>SSH -1 dash 192.168.30.5
+
+Password:
+
+dinanath>en
+
+Password:
+
+dinanath#conf t
+
+Enter configuration commands, one per line. End with CNTL/Z.
+
+dinanath (config)#! 
