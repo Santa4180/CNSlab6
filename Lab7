@@ -1,0 +1,106 @@
+LAB-7
+
+1.diffie-hellman key exchange:
+
+import random
+import math
+
+def isPrime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def getPrimeNumber(r1, r2):
+    while True:
+        n = random.randint(r1, r2)
+        if isPrime(n):
+            return n
+
+p = getPrimeNumber(20, 100)
+print('Chosen prime number p =', p)
+
+g = int(input('Enter a generator g (ideally a primitive root mod p): '))
+
+x = random.randint(2, p - 2)
+R1 = pow(g, x, p)
+print('Alice chose private x =', x, 'and computed R1 =', R1)
+
+y = random.randint(2, p - 2)
+R2 = pow(g, y, p)
+print('Bob chose private y =', y, 'and computed R2 =', R2)
+
+K_Alice = pow(R2, x, p)
+K_Bob = pow(R1, y, p)
+
+print('Alice\'s computed shared key:', K_Alice)
+print('Bob\'s   computed shared key:', K_Bob)
+
+if K_Alice == K_Bob:
+    print('Key Exchange Successful')
+else:
+    print('Key Exchange Failed')
+
+
+
+
+
+2.RSA digital signature:
+
+import math
+import random
+
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def keyGeneration():
+    p = int(input('Enter 1st large prime p: '))
+    while not is_prime(p):
+        p = int(input('Invalid. Enter a prime p: '))
+        
+    q = int(input('Enter 2nd large prime q: '))
+    while not is_prime(q):
+        q = int(input('Invalid. Enter a prime q: '))
+
+    n = p * q
+    phi_n = (p - 1) * (q - 1)
+
+    e = int(input(f'Enter e (1 < e < {phi_n}) such that gcd(e, phi_n) = 1: '))
+    while math.gcd(e, phi_n) != 1 or not (1 < e < phi_n):
+        e = int(input('Invalid. Enter another e: '))
+
+    d = pow(e, -1, phi_n)  # modular inverse of e mod phi_n
+
+    return e, n, d
+
+def generate_signature(M, d, n):
+    return pow(M, d, n)
+
+def verify_signature(S, M, e, n):
+    M1 = pow(S, e, n)
+    print('The receiver is now verifying... It computed M1 =', M1)
+    return M == M1
+
+
+e, n, d = keyGeneration()
+print(f'Public Key (e, n) = ({e}, {n})')
+print(f'Private Key d = {d}')
+
+M = int(input('Enter message M to sign: '))
+S = generate_signature(M, d, n)
+print(f'Signature generated: S = {S}')
+
+print(f'Sending signature S = {S} and message M = {M}')
+res = verify_signature(S, M, e, n)
+
+if res:
+    print('Message Accepted')
+else:
+    print('Message Rejected')
